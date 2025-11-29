@@ -1,10 +1,10 @@
 <?php
     require("function.php");
     session_start();
-    if( !isset($_SESSION["login"]) ) {
-        header("Location: login.php");
-        exit;
-    }
+if( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
     $id_buku = $_GET['id_buku'];
 
 
@@ -23,14 +23,14 @@
         if(ubah_data_buku($_POST) > 0){
             echo "
                 <script>
-                    alert('Data berhasil diubah di database!');
+                    alert('Data BERHASIL diubah di database!');
                     document.location.href = 'index.php';
                 </script>
             ";
         }else{
             echo "
                 <script>
-                    alert('Data gagal diubah di database!');
+                    alert('Data GAGAL diubah di database!');
                     document.location.href = 'index.php';
                 </script>
             ";

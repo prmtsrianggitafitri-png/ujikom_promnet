@@ -1,10 +1,10 @@
 <?php
     require("function.php");
     session_start();
-    if( !isset($_SESSION["login"]) ) {
-        header("Location: login.php");
-        exit;
-    }
+if( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
 
     $kategori = query("SELECT id_kategori, nama_kategori FROM data_kategori");
 
@@ -177,7 +177,7 @@
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                  <a href="logout.php" class="btn btn-default btn-flat float-end">Sign out</a>
                 </li>
                 <!--end::Menu Footer-->
               </ul>
@@ -237,7 +237,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="kategori.php" class="nav-link">
+                    <a href="index2.php" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Data Kategori</p>
                     </a>
@@ -247,7 +247,7 @@
 
               <li class="nav-header">AUTENTIKASI</li>
               <li class="nav-item">
-                <a href="./generate/theme.html" class="nav-link">
+                <a href="logout.php" class="nav-link">
                   <i class="nav-icon bi bi-palette"></i>
                   <p>Sign Out</p>
                 </a>

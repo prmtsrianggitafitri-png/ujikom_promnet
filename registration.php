@@ -1,18 +1,19 @@
 <?php
-    require("function.php");
+   require("function.php");
 
 
-    $error = "";
-    $success = "";
+   $error = "";
+   $success = "";
 
-    
-    if(isset($_POST['tombol_register'])){
-        if(register($_POST) === true){
-            $success = "Registrasi berhasil! Silakan login";
-        }else{
-            $error = register($_POST);
-        }
-    }
+
+   if(isset($_POST['tombol_register'])){
+       if(register($_POST) === true){
+           $success = "Registrasi berhasil! Silakan login";
+       }else{
+           $error = register($_POST);
+       }
+   }
+
 ?>
 
 
@@ -76,8 +77,8 @@
 
                     <!-- Nama Lengkap -->
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" class="form-control" placeholder="Masukkan Nama Lengkap" autocomplete="off" required>
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan Nama" autocomplete="off" required>
                     </div>
 
 

@@ -1,10 +1,10 @@
 <?php
     require("function.php");
     session_start();
-    if( !isset($_SESSION["login"]) ) {
-        header("Location: login.php");
-        exit;
-    }
+if( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
 
     // kita akan cek dulu ketika tombol submit ditekan
     if(isset($_POST['tombol_submit_kategori'])){

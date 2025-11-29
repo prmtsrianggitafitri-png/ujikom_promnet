@@ -1,10 +1,10 @@
 <?php
     require("function.php");
     session_start();
-    if( !isset($_SESSION["login"]) ) {
-        header("Location: login.php");
-        exit;
-    }
+if( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
     $id_kategori = $_GET['id_kategori'];
 
 
@@ -168,7 +168,10 @@
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
-                <span class="d-none d-md-inline">Nama Kamu</span>
+                <span class="d-none d-md-inline"><?php
+        echo
+            $_SESSION["username"]
+        ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->

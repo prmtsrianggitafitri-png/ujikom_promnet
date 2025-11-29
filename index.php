@@ -1,20 +1,10 @@
 <?php
-  session_start();
-    // koneksi ke database
-    // var conn = fungsi koneksi("nama_host", "username", "password", "nama_db");
-    // cara cek username di db mysql dengan CMD --> select user();
-    require("function.php");
-    
-    if( !isset($_SESSION["login"]) ) {
-        header("Location: login.php");
-        exit;
-    }
-    
-    // $query = query("SELECT * FROM mahasiswa");
-    // $mahasiswa = $query;
-
-
-
+require('function.php');
+session_start();
+if( !isset($_SESSION["login"]) ) {
+    header("Location: login.php");
+    exit;
+}
 
     //pagination
     $jumlahDataPerHalaman = 5;
@@ -163,7 +153,11 @@
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
-                <span class="d-none d-md-inline">Nama Kamu</span>
+                <span class="d-none d-md-inline">
+                  <?php
+                  echo
+            $_SESSION["username"]
+        ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->

@@ -1,8 +1,8 @@
 <?php
-    session_start(); 
     require("function.php");
+    session_start();
     if( isset($_SESSION["login"]) ) {
-        header("Location: index.php");
+        header("Location: login.php");
         exit;
     }
 
@@ -14,9 +14,8 @@
     if(isset($_POST['tombol_login'])){
         
         $login_result = login($_POST);
-        // echo login($_POST);  
-        if($login_result == true){
-
+         
+        if($login_result === true){
             header("Location: index.php");
             exit;
         }else{
@@ -24,9 +23,6 @@
        
         }
     }
-
-
-
 
 ?>
 
@@ -93,8 +89,8 @@
 
                     <!-- Nama Lengkap -->
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" class="form-control" placeholder="Masukkan usernama..." autocomplete="off" required>
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Masukkan Nama Lengkap" autocomplete="off" required>
                     </div>
 
 

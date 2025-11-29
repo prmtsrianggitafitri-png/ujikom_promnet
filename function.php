@@ -172,8 +172,6 @@ function tambah_data_kategori($data){
 function ubah_data_buku($data){
     global $conn;
 
-    
-
     $id_buku = $data['id_buku'];
     $nama_penulis = $data['nama_penulis'];
     $judul_buku = $data['judul_buku'];
@@ -181,22 +179,26 @@ function ubah_data_buku($data){
     $penerbit = $data['penerbit'];
     $stok = $data['stok'];
     $kategori = $data['id_kategori'];
-    $gambar = $data['gambar'];
+    
     $gambar_lama = htmlspecialchars($data['gambar_lama']);
 
-    if( $_FILES['gambar']['error'] === 4 ) {
-        $gambar = $gambar_lama; 
-    } else {
-        $gambar = upload_gambar($judul_buku, $nama_penulis);
+    if( $_FILES['gambar']['error'] !== 4 ) {
+        $gambar_baru = upload_gambar($judul_buku, $nama_penulis);
 
-    
-        if (!$gambar) {
-            return false;}}
+        if ($gambar_baru === false) {
+            return false; 
+        }
+        
+        $gambar = $gambar_baru;
+        if ($gambar_lama != 'default.jpg' && file_exists('img/' . $gambar_lama)) {
+            @unlink('img/' . $gambar_lama); 
+             }
+        }
 
     //update
     $query = "UPDATE data_buku SET
-                id_buku = '$id_buku',
                 nama_penulis = '$nama_penulis',
+                id_buku = '$id_buku',
                 judul_buku = '$judul_buku',
                 jumlah_halaman = '$jumlah_halaman',
                 penerbit = '$penerbit',
@@ -207,9 +209,14 @@ function ubah_data_buku($data){
              ";
 
 
-     $result = mysqli_query($conn, $query);
-     
-     return mysqli_affected_rows($conn);
+            $result = mysqli_query($conn, $query);
+                
+            if ($result === false) {
+                return 0; 
+            }
+
+            
+            return (mysqli_affected_rows($conn) >= 0) ? 1 : 0;
 }
 
 
@@ -266,38 +273,36 @@ function hapus_data_kategori($id_kategori){
     return mysqli_affected_rows($conn);    
 }
 
-//fungsi register
+// fungsi untuk register
 function register($data){
     global $conn;
 
 
-    $nama_lengkap = strtolower($data['nama_lengkap']);
+    $username = strtolower($data['username']);
     $email = $data['email'];
-    $password_user = $data['password']; 
-    $password = mysqli_real_escape_string($conn, $password_user);
+    $password = mysqli_real_escape_string($conn, $data['password']);
 
-    
-    if(strlen($password_user) < 8){
-        return "Password minimal 8 karakter";
-    }
+    if (strlen($data['password']) < 8) {
+        return "Password minimal harus 8 karakter!";}
+
 
     // query untuk ngecek username yang diinputkan oleh user di database
-    $query = mysqli_query($conn, "SELECT nama_lengkap FROM user WHERE nama_lengkap = '$nama_lengkap'");
+    $query = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
     $result = mysqli_fetch_assoc($query);
 
 
     if($result != NULL){
-        return "Nama Kamu sudah terdaftar!";
+        return "Username sudah terdaftar!";
     }
 
 
+
     // enkripsi password
-    $password = password_hash($password_user, PASSWORD_DEFAULT);
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
 
     // tambahkan userbaru ke database
-    mysqli_query($conn, "INSERT INTO user (nama_lengkap, email, password) 
-    VALUES('$nama_lengkap', '$email', '$password')");
+    mysqli_query($conn, "INSERT INTO user (username, email, password) VALUES('$username', '$email', '$password')");
 
 
     return true;
@@ -307,11 +312,11 @@ function register($data){
 function login($data){
     global $conn;
 
-    $nama_lengkap = strtolower($data['nama_lengkap']);
+    $username = strtolower($data['username']);
     $password = $data['password'];
 
 
-    $query = "SELECT * FROM user WHERE nama_lengkap = '$nama_lengkap'";
+    $query = "SELECT * FROM user WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
 
 
@@ -320,19 +325,17 @@ function login($data){
 
 
         if(password_verify($password, $row['password'])){
-            $_SESSION['login'] = true; 
-            $_SESSION['nama_lengkap'] = $row['nama_lengkap'];
+            $_SESSION['login'] = true;
+            $_SESSION['username'] = $row['username'];
             return true;
         } else {
            
-            return "Password yang ada masukan salah!";
+            return "Password salah!";
         }
 
 
     }else{
-        return "Nama tidak terdaftar!";
+        return "Username tidak terdaftar!";
     }
-
-    
 }
 ?>
