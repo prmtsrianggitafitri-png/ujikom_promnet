@@ -156,7 +156,10 @@ if( !isset($_SESSION["login"]) ) {
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
-                <span class="d-none d-md-inline">Nama Kamu</span>
+                <span class="d-none d-md-inline"><?php
+        echo
+            $_SESSION["username"]
+        ?></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->
